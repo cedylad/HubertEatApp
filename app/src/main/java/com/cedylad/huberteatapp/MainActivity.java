@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String mailU;
     private String passwordU;
+    private String firstNameU;
+    private String lastNameU;
+    private String soldeU;
     private Database database;
 
     @Override
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-   public void onApiResponse(JSONObject response) {
+    public void onApiResponse(JSONObject response) {
         Boolean success = null;
         String error = "";
 
@@ -60,10 +63,18 @@ public class MainActivity extends AppCompatActivity {
             success = response.getBoolean("success");
 
             if(success == true) {
+                firstNameU = response.getString("firstNameU");
+                lastNameU = response.getString("lastNameU");
+                soldeU = response.getString("soldeU");
+
                 Intent loggedInActivity = new Intent(getApplicationContext(), LoggedInActivity.class);
                 loggedInActivity.putExtra("mailU", mailU);
+                loggedInActivity.putExtra("firstNameU", firstNameU);
+                loggedInActivity.putExtra("lastNameU", lastNameU);
+                loggedInActivity.putExtra("soldeU", soldeU);
                 startActivity(loggedInActivity);
                 finish();
+
 
             } else {
                 error = response.getString("error");
@@ -73,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
-
     }
 
+
     public void connectUser() {
-        String url = "http://10.0.2.2/apiHEapp/api.php";
+        String url = "https://visumat.fr/api.php";
 
         Map<String, String> params = new HashMap<>();
         params.put("mailU", mailU);
