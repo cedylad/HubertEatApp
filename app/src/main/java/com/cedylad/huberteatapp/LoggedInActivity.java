@@ -1,15 +1,20 @@
 package com.cedylad.huberteatapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +46,7 @@ public class LoggedInActivity extends AppCompatActivity {
         }
 
         // Affichage du message de bienvenue pour l'utilisateur connecté
-        getSupportActionBar().setTitle("HUberEat | " + firstNameU + " | Solde :" + soldeU + " €");
+        getSupportActionBar().setTitle("HUberEat | " + firstNameU + " | Solde : " + soldeU + " €");
 
         LinearLayout layout = findViewById(R.id.commandes_layout);
 
@@ -51,10 +56,17 @@ public class LoggedInActivity extends AppCompatActivity {
                 String idC = commande.getString("idC");
                 String dateC = commande.getString("dateC");
                 int livraison = commande.getInt("livraison");
+                String imgP = commande.getString("imgP");
+
+                // Créer une carte pour chaque commande
+                LinearLayout carteCommande = new LinearLayout(this);
+                carteCommande.setOrientation(LinearLayout.VERTICAL);
+                carteCommande.setBackground(getResources().getDrawable(R.drawable.background_card));
 
                 // Créer les textviews pour chaque propriété
                 TextView idCTextView = new TextView(this);
                 idCTextView.setText("Commande n°" + idC);
+                idCTextView.setTextSize(18);
 
                 // Convertir la date au format "jour/mois/année"
                 SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -65,12 +77,14 @@ public class LoggedInActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 TextView dateCTextView = new TextView(this);
-                dateCTextView.setText("Data : " + dateFormatted);
+                dateCTextView.setText("Date : " + dateFormatted);
+                dateCTextView.setTextSize(16);
 
                 TextView livraisonTextView = new TextView(this);
                 String livraisonText = "Etat de la livraison : ";
-                switch(livraison) {
+                switch (livraison) {
                     case 0:
                         livraisonText += "Commande en attente";
                         break;
@@ -78,23 +92,32 @@ public class LoggedInActivity extends AppCompatActivity {
                         livraisonText += "Commande livrée";
                         break;
                     case 2:
-                        livraisonText += "Refusée";
+                        livraisonText += "Commande refusée";
                         break;
                     case 3:
-                        livraisonText += "Annulée";
+                        livraisonText += "Commande annulée";
                         break;
                     default:
-                        livraisonText += "Commande perdu";
+                        livraisonText += "Commande perdue";
                         break;
                 }
                 livraisonTextView.setText(livraisonText);
+                livraisonTextView.setTextSize(16);
 
-                // Ajouter les textviews au layout
+                // Charge l'image depuis un fichier grace au lien dusite
+                Bitmap bmp = BitmapFactory.decodeFile("https://visumat.fr/img/plat/" + imgP);
+
+                // définit l'image dans l'ImageView
+                ImageView imageView = new ImageView(this);
+                Picasso.get().load("https://visumat.fr/img/plat/" + imgP).into(imageView);
+
+                // Ajout les textviews au layout
                 layout.addView(idCTextView);
                 layout.addView(dateCTextView);
                 layout.addView(livraisonTextView);
+                layout.addView(imageView);
 
-                // Ajouter une ligne de séparation
+                // Ajout une ligne de séparation
                 View separator = new View(this);
                 separator.setBackgroundColor(getResources().getColor(R.color.black));
                 separator.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
@@ -103,7 +126,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
 
         // Récupération du bouton de déconnexion
         Button logoutButton = findViewById(R.id.button_logout);

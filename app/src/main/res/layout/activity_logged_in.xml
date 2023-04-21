@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical">
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:textColor="@color/black"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:textColor="@color/black">
 
         <LinearLayout
             android:id="@+id/commandes_layout"
@@ -18,13 +26,6 @@
             android:orientation="vertical"
             android:textSize="20sp"
             android:textColor="@color/black">
-
-            <TextView
-                android:id="@+id/titleTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -41,3 +42,4 @@
 
 
 </LinearLayout>
+</ScrollView>
