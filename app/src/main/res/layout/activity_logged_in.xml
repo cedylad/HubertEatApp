@@ -11,33 +11,19 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/commandes_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:textSize="20sp"
+            android:textColor="@color/black">
 
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Titre de la carte"
                 android:textSize="20sp"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:id="@+id/dateTexteView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Description de la carte"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:id="@+id/etatTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Description de la carte"
-                android:textSize="16sp"
                 android:textColor="@color/black"/>
 
         </LinearLayout>

@@ -1,15 +1,20 @@
 package com.cedylad.huberteatapp;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class LoggedInActivity extends AppCompatActivity {
 
@@ -38,21 +43,66 @@ public class LoggedInActivity extends AppCompatActivity {
         // Affichage du message de bienvenue pour l'utilisateur connecté
         getSupportActionBar().setTitle("HUberEat | " + firstNameU + " | Solde :" + soldeU + " €");
 
+        LinearLayout layout = findViewById(R.id.commandes_layout);
 
+        for (int i = 0; i < commandes.length(); i++) {
+            try {
+                JSONObject commande = commandes.getJSONObject(i);
+                String idC = commande.getString("idC");
+                String dateC = commande.getString("dateC");
+                int livraison = commande.getInt("livraison");
 
-// Affichage des informations des commandes dans un TextView
-        TextView titleTextView = findViewById(R.id.titleTextView);
-        TextView dateTexteView = findViewById(R.id.dateTexteView);
-        TextView etatTextView = findViewById(R.id.etatTextView);
-        StringBuilder commandeTexte = new StringBuilder();
-        for(int i = 0; i < commandes.length(); i++) {
+                // Créer les textviews pour chaque propriété
+                TextView idCTextView = new TextView(this);
+                idCTextView.setText("Commande n°" + idC);
 
-               // String commande = "Commande n°" + commandes.getJSONObject(i).getString("idC") + " commandé le " + commandes.getJSONObject(i).getString("dateC") + " avec livraison " + commandes.getJSONObject(i).getString("livraison");
-               // commandeTexte.append(commande).append("\n");
+                // Convertir la date au format "jour/mois/année"
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateFormatted = "";
+                try {
+                    dateFormatted = outputFormat.format(inputFormat.parse(dateC));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                TextView dateCTextView = new TextView(this);
+                dateCTextView.setText("Data : " + dateFormatted);
 
+                TextView livraisonTextView = new TextView(this);
+                String livraisonText = "Etat de la livraison : ";
+                switch(livraison) {
+                    case 0:
+                        livraisonText += "Commande en attente";
+                        break;
+                    case 1:
+                        livraisonText += "Commande livrée";
+                        break;
+                    case 2:
+                        livraisonText += "Refusée";
+                        break;
+                    case 3:
+                        livraisonText += "Annulée";
+                        break;
+                    default:
+                        livraisonText += "Commande perdu";
+                        break;
+                }
+                livraisonTextView.setText(livraisonText);
+
+                // Ajouter les textviews au layout
+                layout.addView(idCTextView);
+                layout.addView(dateCTextView);
+                layout.addView(livraisonTextView);
+
+                // Ajouter une ligne de séparation
+                View separator = new View(this);
+                separator.setBackgroundColor(getResources().getColor(R.color.black));
+                separator.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
+                layout.addView(separator);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
-        titleTextView.setText(commandeTexte.toString());
-
 
 
         // Récupération du bouton de déconnexion
