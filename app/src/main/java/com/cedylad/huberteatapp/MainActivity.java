@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private String mailU;
     private String passwordU;
     private String firstNameU;
-    private String lastNameU;
     private String soldeU;
     private Database database;
+    private JSONArray commandes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
 
             if(success == true) {
                 firstNameU = response.getString("firstNameU");
-                lastNameU = response.getString("lastNameU");
                 soldeU = response.getString("soldeU");
+                commandes = response.getJSONArray("commandes");
 
                 Intent loggedInActivity = new Intent(getApplicationContext(), LoggedInActivity.class);
                 loggedInActivity.putExtra("mailU", mailU);
                 loggedInActivity.putExtra("firstNameU", firstNameU);
-                loggedInActivity.putExtra("lastNameU", lastNameU);
                 loggedInActivity.putExtra("soldeU", soldeU);
+                loggedInActivity.putExtra("commandes", commandes.toString());
                 startActivity(loggedInActivity);
                 finish();
 

@@ -8,11 +8,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 public class LoggedInActivity extends AppCompatActivity {
 
     private String mailU;
     private String firstNameU;
-    private String lastNameU;
     private String soldeU;
 
     @Override
@@ -20,28 +22,41 @@ public class LoggedInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
 
-
         // Récupération du nom d'utilisateur depuis les paramètres de l'application
         mailU = getIntent().getStringExtra("mailU");
         firstNameU = getIntent().getStringExtra("firstNameU");
-        lastNameU = getIntent().getStringExtra("lastNameU");
         soldeU = getIntent().getStringExtra("soldeU");
 
+        // Récupération de la JSONArray des commandes depuis les paramètres de l'application
+        JSONArray commandes = null;
+        try {
+            commandes = new JSONArray(getIntent().getStringExtra("commandes"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // Affichage du message de bienvenue pour l'utilisateur connecté
-        getSupportActionBar().setTitle("Bienvenue " + firstNameU + " !");
+        getSupportActionBar().setTitle("HUberEat | " + firstNameU + " | Solde :" + soldeU + " €");
 
-        //Affiche sur l'écran
-        TextView textFirstName = findViewById(R.id.textFirstName);
-        textFirstName.setText("Bienvenue " + firstNameU + " !");
 
-        TextView textSoldeU = findViewById(R.id.textSoldeU);
-        textSoldeU.setText("Le solde est de " + soldeU + " €");
+
+// Affichage des informations des commandes dans un TextView
+        TextView titleTextView = findViewById(R.id.titleTextView);
+        TextView dateTexteView = findViewById(R.id.dateTexteView);
+        TextView etatTextView = findViewById(R.id.etatTextView);
+        StringBuilder commandeTexte = new StringBuilder();
+        for(int i = 0; i < commandes.length(); i++) {
+
+               // String commande = "Commande n°" + commandes.getJSONObject(i).getString("idC") + " commandé le " + commandes.getJSONObject(i).getString("dateC") + " avec livraison " + commandes.getJSONObject(i).getString("livraison");
+               // commandeTexte.append(commande).append("\n");
+
+        }
+        titleTextView.setText(commandeTexte.toString());
+
 
 
         // Récupération du bouton de déconnexion
         Button logoutButton = findViewById(R.id.button_logout);
-        //TextView nomUser = findViewById(R.id.nomUser);
 
         // Ajout d'un écouteur d'événements pour l'appui sur le bouton de déconnexion
         logoutButton.setOnClickListener(new View.OnClickListener() {

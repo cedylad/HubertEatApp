@@ -40,4 +40,6 @@ dependencies {
 
     implementation 'com.android.volley:volley-cronet:1.2.1'
     implementation 'com.google.code.gson:gson:2.8.7'
+    implementation "androidx.cardview:cardview:1.0.0"
+
 }
