@@ -62,19 +62,21 @@ public class LoggedInActivity extends AppCompatActivity {
 
                 LinearLayout carteCommande = new LinearLayout(this);
                 carteCommande.setOrientation(LinearLayout.VERTICAL);
-                carteCommande.setBackground(getResources().getDrawable(R.drawable.background_card));
+                //carteCommande.setBackground(getResources().getDrawable(R.drawable.background_card));
 
                 // Créer les textviews pour chaque propriété
 
                 //Partie icD
                 TextView idCTextView = new TextView(this);
                 idCTextView.setText("Commande n°" + idC);
-                idCTextView.setTextSize(18);
+                idCTextView.setTextSize(22);
+                idCTextView.setTextColor(getResources().getColor(R.color.white));
 
                 //Partie nomP
                 TextView nomPTextView = new TextView(this);
                 nomPTextView.setText("Plat : " + nomP);
-                nomPTextView.setTextSize(18);
+                nomPTextView.setTextSize(16);
+                nomPTextView.setTextColor(getResources().getColor(R.color.white));
 
 
                 //Parti dateC
@@ -91,30 +93,37 @@ public class LoggedInActivity extends AppCompatActivity {
                 TextView dateCTextView = new TextView(this);
                 dateCTextView.setText("Date : " + dateFormatted);
                 dateCTextView.setTextSize(16);
+                dateCTextView.setTextColor(getResources().getColor(R.color.white));
 
                 //Partie livraison
 
                 TextView livraisonTextView = new TextView(this);
-                String livraisonText = "Etat de la livraison : ";
+                String livraisonText = "";
                 switch (livraison) {
                     case 0:
                         livraisonText += "Commande en attente";
+                        carteCommande.setBackground(getResources().getDrawable(R.drawable.background_attente));
                         break;
                     case 1:
                         livraisonText += "Commande livrée";
+                        carteCommande.setBackground(getResources().getDrawable(R.drawable.background_valide));
                         break;
                     case 2:
                         livraisonText += "Commande refusée";
+                        carteCommande.setBackground(getResources().getDrawable(R.drawable.background_refuse));
                         break;
                     case 3:
                         livraisonText += "Commande annulée";
+                        carteCommande.setBackground(getResources().getDrawable(R.drawable.background_annule));
                         break;
                     default:
                         livraisonText += "Commande perdue";
+                        carteCommande.setBackground(getResources().getDrawable(R.drawable.background_annule));
                         break;
                 }
                 livraisonTextView.setText(livraisonText);
-                livraisonTextView.setTextSize(16);
+                livraisonTextView.setTextSize(30);
+                livraisonTextView.setTextColor(getResources().getColor(R.color.white));
 
 
                 //Partie imgP
@@ -128,16 +137,16 @@ public class LoggedInActivity extends AppCompatActivity {
                 carteCommande.addView(idCTextView);
                 carteCommande.addView(dateCTextView);
                 carteCommande.addView(nomPTextView);
-                carteCommande.addView(livraisonTextView);
                 carteCommande.addView(imageView);
+                carteCommande.addView(livraisonTextView);
 
                 // Ajout la carte de commande au layout
                 layout.addView(carteCommande);
 
                 // Ajout une ligne de séparation
                 View separator = new View(this);
-                separator.setBackgroundColor(getResources().getColor(R.color.black));
-                separator.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
+                separator.setBackgroundColor(getResources().getColor(R.color.white));
+                separator.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 8));
                 layout.addView(separator);
 
 
@@ -145,7 +154,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
 
         // Récupération du bouton de déconnexion
         Button logoutButton = findViewById(R.id.button_logout);

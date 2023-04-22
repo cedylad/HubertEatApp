@@ -39,7 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="MES COMMANDES"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:background="@color/purple_700"
                 android:textSize="100px" />
         </LinearLayout>
 
