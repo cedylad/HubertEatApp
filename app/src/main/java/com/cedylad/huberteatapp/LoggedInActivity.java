@@ -143,7 +143,6 @@ public class LoggedInActivity extends AppCompatActivity {
         }
 
 
-
         // Récupération du bouton de déconnexion
         Button logoutButton = findViewById(R.id.button_logout);
 
