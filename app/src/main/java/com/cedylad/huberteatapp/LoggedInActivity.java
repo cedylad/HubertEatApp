@@ -1,8 +1,6 @@
 package com.cedylad.huberteatapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
@@ -52,22 +50,34 @@ public class LoggedInActivity extends AppCompatActivity {
 
         for (int i = 0; i < commandes.length(); i++) {
             try {
+                //Récupération des attribu depuis le JSON
                 JSONObject commande = commandes.getJSONObject(i);
                 String idC = commande.getString("idC");
                 String dateC = commande.getString("dateC");
                 int livraison = commande.getInt("livraison");
+                String nomP = commande.getString("nomP");
                 String imgP = commande.getString("imgP");
 
-                // Créer une carte pour chaque commande
+                // Crée une carte pour chaque commande
+
                 LinearLayout carteCommande = new LinearLayout(this);
                 carteCommande.setOrientation(LinearLayout.VERTICAL);
                 carteCommande.setBackground(getResources().getDrawable(R.drawable.background_card));
 
                 // Créer les textviews pour chaque propriété
+
+                //Partie icD
                 TextView idCTextView = new TextView(this);
                 idCTextView.setText("Commande n°" + idC);
                 idCTextView.setTextSize(18);
 
+                //Partie nomP
+                TextView nomPTextView = new TextView(this);
+                nomPTextView.setText("Plat : " + nomP);
+                nomPTextView.setTextSize(18);
+
+
+                //Parti dateC
                 // Convertir la date au format "jour/mois/année"
                 SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -81,6 +91,8 @@ public class LoggedInActivity extends AppCompatActivity {
                 TextView dateCTextView = new TextView(this);
                 dateCTextView.setText("Date : " + dateFormatted);
                 dateCTextView.setTextSize(16);
+
+                //Partie livraison
 
                 TextView livraisonTextView = new TextView(this);
                 String livraisonText = "Etat de la livraison : ";
@@ -104,28 +116,33 @@ public class LoggedInActivity extends AppCompatActivity {
                 livraisonTextView.setText(livraisonText);
                 livraisonTextView.setTextSize(16);
 
-                // Charge l'image depuis un fichier grace au lien dusite
-                Bitmap bmp = BitmapFactory.decodeFile("https://visumat.fr/img/plat/" + imgP);
+
+                //Partie imgP
 
                 // définit l'image dans l'ImageView
                 ImageView imageView = new ImageView(this);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 Picasso.get().load("https://visumat.fr/img/plat/" + imgP).into(imageView);
 
-                // Ajout les textviews au layout
+// Ajout les textviews au layout
                 layout.addView(idCTextView);
                 layout.addView(dateCTextView);
+                layout.addView(nomPTextView);
                 layout.addView(livraisonTextView);
                 layout.addView(imageView);
 
-                // Ajout une ligne de séparation
+// Ajout une ligne de séparation
                 View separator = new View(this);
                 separator.setBackgroundColor(getResources().getColor(R.color.black));
                 separator.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
                 layout.addView(separator);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+
+
 
         // Récupération du bouton de déconnexion
         Button logoutButton = findViewById(R.id.button_logout);
