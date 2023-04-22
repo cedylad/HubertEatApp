@@ -40,9 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="MES COMMANDES"
                 android:textColor="@color/black"
-                android:textSize="100px"
-
-                />
+                android:textSize="100px" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -124,18 +124,22 @@ public class LoggedInActivity extends AppCompatActivity {
                 imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 Picasso.get().load("https://visumat.fr/img/plat/" + imgP).into(imageView);
 
-// Ajout les textviews au layout
-                layout.addView(idCTextView);
-                layout.addView(dateCTextView);
-                layout.addView(nomPTextView);
-                layout.addView(livraisonTextView);
-                layout.addView(imageView);
+                // Ajout les textviews et l'image à la carte de commande
+                carteCommande.addView(idCTextView);
+                carteCommande.addView(dateCTextView);
+                carteCommande.addView(nomPTextView);
+                carteCommande.addView(livraisonTextView);
+                carteCommande.addView(imageView);
 
-// Ajout une ligne de séparation
+                // Ajout la carte de commande au layout
+                layout.addView(carteCommande);
+
+                // Ajout une ligne de séparation
                 View separator = new View(this);
                 separator.setBackgroundColor(getResources().getColor(R.color.black));
                 separator.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
                 layout.addView(separator);
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
